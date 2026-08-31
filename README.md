@@ -16,3 +16,42 @@ This week I built my first machine learning classification model using the Iris 
 - Learned why testing on unseen data is important
 ### Result
 The KNN model achieved 100% accuracy on the test set. The confusion matrix showed that all 30 test samples were classified correctly with no misclassifications.
+
+# Week 4: Better Models and Honest Evaluation
+## Overview
+This week focused on improving and evaluating machine learning models using the Iris dataset. I worked with KNN, Decision Tree, and Random Forest classifiers and compared their performance using training accuracy, test accuracy, and cross-validation.
+
+## What I Learned
+
+* How Decision Tree and Random Forest classifiers work
+* How to compare different machine learning models
+* How to identify possible overfitting
+* Why test accuracy can sometimes be misleading
+* How changing the `random_state` can affect model performance
+* How to use 5-fold cross-validation for a more reliable evaluation
+* How feature scaling affects KNN performance
+* How to interpret confusion matrices and classification reports
+
+## Models Compared
+
+| Model         | Training Accuracy | Test Accuracy |
+| ------------- | ----------------: | ------------: |
+| KNN           |            95.83% |          100% |
+| Decision Tree |              100% |        93.33% |
+| Random Forest |              100% |           90% |
+
+## Cross-Validation
+
+KNN was evaluated using 5-fold cross-validation.
+
+**Average Cross-Validation Score: 95.83%**
+
+This provides a more reliable estimate of model performance than relying on a single train-test split.
+
+## Random State Investigation
+
+The KNN model was tested using random states **42, 0, 1, and 7**. The test accuracy was 100% for random states 42, 0, and 7, while it decreased to 96.67% for random state 1. This showed that model accuracy can change depending on how the data is split.
+
+## Conclusion
+
+KNN achieved the highest test accuracy on this particular split, but the 5-fold cross-validation score of 95.83% gives a more honest estimate of its generalization performance. The experiment showed why a single accuracy score, especially a perfect 100% score, should be investigated rather than automatically treated as evidence of a perfect model.
