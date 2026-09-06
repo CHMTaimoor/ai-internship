@@ -55,3 +55,30 @@ The KNN model was tested using random states **42, 0, 1, and 7**. The test accur
 ## Conclusion
 
 KNN achieved the highest test accuracy on this particular split, but the 5-fold cross-validation score of 95.83% gives a more honest estimate of its generalization performance. The experiment showed why a single accuracy score, especially a perfect 100% score, should be investigated rather than automatically treated as evidence of a perfect model.
+# Week 5 – Deep Learning with PyTorch
+## Overview
+This week focused on learning the basics of deep learning using **PyTorch** and building a neural network to classify handwritten digits.
+## What I Did
+* Set up PyTorch and enabled the **Google Colab GPU (Tesla T4)**
+* Learned about **PyTorch tensors and Autograd**
+* Loaded and prepared the **MNIST dataset**
+* Built a neural network from scratch using PyTorch
+* Implemented the complete **training loop**
+* Plotted the training loss curve
+* Evaluated the model's test accuracy
+* Examined misclassified images
+* Added **Dropout** as an improvement and compared the results
+
+## Technologies
+
+* Python
+* PyTorch
+* Torchvision
+* Matplotlib
+* Google Colab
+* MNIST Dataset
+
+## Result
+The neural network successfully learned to classify handwritten digits. The loss decreased during training, and the model achieved high test accuracy.
+## Conclusion
+This week helped me understand how PyTorch neural networks are trained using **forward pass, loss calculation, backpropagation, and optimizer updates**.
