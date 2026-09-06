@@ -3,6 +3,17 @@ Week 1 - Data Analysis
 This repository contains my Week 1 internship work.
 The project demonstrates basic Python, NumPy, and Pandas operations.
 The notebook loads a CSV dataset, explores the data, selects rows and columns, filters data, and calculates basic summary statistics.
+# Week 2 — Exploratory Data Analysis
+This project contains my Week 2 internship work on exploratory data analysis.
+## Dataset
+The dataset contains football player statistics from Kaggle, with 3,120 players and 65 columns.
+## What I Learned
+- Exploring datasets using Pandas
+- Cleaning and converting data
+- Filtering and grouping data
+- Calculating summary statistics
+- Creating visualizations using Matplotlib
+- Finding patterns and insights in a real-world dataset
 
 ## Week 3 — First Machine Learning Model
 This week I built my first machine learning classification model using the Iris dataset and scikit-learn.
