@@ -93,3 +93,43 @@ This week focused on learning the basics of deep learning using **PyTorch** and 
 The neural network successfully learned to classify handwritten digits. The loss decreased during training, and the model achieved high test accuracy.
 ## Conclusion
 This week helped me understand how PyTorch neural networks are trained using **forward pass, loss calculation, backpropagation, and optimizer updates**.
+
+# Week 6 – Object Detection and OCR (ANPR)
+
+## Overview
+
+This project implements a basic **Automatic Number Plate Recognition (ANPR)** system using **YOLO** for license plate detection and **EasyOCR** for text recognition.
+
+**Pipeline:**
+Image → YOLO → License Plate Crop → EasyOCR → Plate Text
+
+## Dataset
+
+* Training Images: **346**
+* Testing Images: **87**
+* Classes: **1 (`license_plate`)**
+
+## What I Did
+
+* Prepared and verified the license plate dataset.
+* Fine-tuned a pretrained YOLO model using transfer learning.
+* Detected license plates in an unseen image.
+* Cropped the detected license plate.
+* Used EasyOCR to recognize the plate text.
+* Evaluated the limitations of OCR.
+
+## Results
+
+* YOLO detection: **Successful**
+* Best detection confidence: **0.933**
+* License plate cropping: **Successful**
+* EasyOCR: **Successfully executed**
+* OCR: **Some characters were recognized with low confidence**
+
+## Findings
+
+YOLO successfully detected the license plate, while OCR performance was affected by image quality and plate characteristics. This showed me that accurate object detection does not always guarantee accurate OCR results.
+
+## Conclusion
+
+The complete **YOLO + EasyOCR ANPR pipeline** was successfully implemented and tested. The project provided practical experience with **object detection, transfer learning, image processing, and OCR**.
