@@ -133,3 +133,119 @@ YOLO successfully detected the license plate, while OCR performance was affected
 ## Conclusion
 
 The complete **YOLO + EasyOCR ANPR pipeline** was successfully implemented and tested. The project provided practical experience with **object detection, transfer learning, image processing, and OCR**.
+
+# Week 7: ANPR Capstone Project
+## Overview
+This project is an end-to-end Automatic Number Plate Recognition (ANPR) pipeline. It takes a vehicle image as input, detects the license plate using YOLO, crops the detected plate, and uses EasyOCR to recognize the text.
+## End-to-End Pipeline
+**Input Image → YOLO Detection → Plate Crop → Image Upscaling → EasyOCR → Final Text Result**
+The pipeline combines object detection and OCR into one complete workflow.
+
+## Technologies Used
+
+* Python
+* Google Colab
+* PyTorch
+* Ultralytics YOLO
+* EasyOCR
+* OpenCV
+* NumPy
+
+## Dataset
+
+The project uses a license plate dataset in YOLO format.
+
+* Training images: **346**
+* Test/validation images: **87**
+* Number of classes: **1**
+* Class: `license_plate`
+
+## Model Training
+
+A pretrained YOLO model was fine-tuned for license plate detection.
+
+Training configuration:
+
+* Model: YOLO
+* Epochs: **20**
+* Image size: **640**
+* Batch size: **16**
+* GPU: **NVIDIA Tesla T4**
+
+### YOLO Evaluation Results
+
+The trained model was evaluated on the test/validation dataset.
+
+* Precision: **0.895**
+* Recall: **0.883**
+* mAP@50: **0.930**
+* mAP@50-95: **0.565**
+
+## Post-Processing
+
+After YOLO detects a license plate:
+
+1. The detected bounding box is extracted.
+2. The license plate region is cropped from the original image.
+3. The cropped plate is upscaled.
+4. The processed crop is passed to EasyOCR.
+5. OCR results are filtered using a confidence threshold.
+6. The final recognized text is returned.
+
+## Example Input and Output
+
+An unseen test image was used to demonstrate the complete pipeline.
+
+**Input:** `Cars164.png`
+
+### YOLO Detection
+
+* License plate detected: **Yes**
+* YOLO confidence: **0.857**
+* Bounding box: **(159, 143, 238, 183)**
+
+### OCR Result
+
+* Recognized text: **GT**
+* OCR confidence: **0.998**
+
+### Final Result
+
+```text
+Input Image: Cars164.png
+License Plate Detected: Yes
+YOLO Confidence: 0.857
+OCR Text: GT
+OCR Confidence: 0.998
+```
+
+This demonstrates the complete process from an input image to a final text result.
+
+## How to Run
+
+1. Open `Week_7_Capstone_ANPR_Pipeline.ipynb` in Google Colab.
+2. Run the notebook cells from top to bottom.
+3. The required libraries are installed.
+4. The dataset is downloaded and prepared.
+5. The YOLO model is trained for license plate detection.
+6. The trained model is loaded.
+7. A test image is passed through the ANPR pipeline.
+8. YOLO detects the license plate.
+9. The detected region is cropped and upscaled.
+10. EasyOCR reads the text from the plate.
+11. The final detection and OCR results are displayed.
+
+## Project Structure
+
+```text
+ai-internship/
+│
+├── Week_7_Capstone_ANPR_Pipeline.ipynb
+└── README.md
+```
+
+## Conclusion
+
+This project demonstrates a complete end-to-end ANPR-style pipeline combining license plate detection and OCR. The pipeline accepts an image, detects the license plate, processes the detected region, and returns an OCR result with confidence values.
+
+The notebook also includes YOLO evaluation results and an example of the complete pipeline running on an unseen test image.
