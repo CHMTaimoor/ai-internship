@@ -194,4 +194,49 @@ This project combines **object detection and OCR into one working ANPR pipeline*
 ## How to Run
 
 Open `Week_7_Capstone_ANPR_Pipeline.ipynb` in Google Colab, provide a vehicle image, and run the cells in order to obtain the final plate detection and OCR result.
+# Week 8 – Capstone App: License Plate Detection and OCR
+## Overview
+This project packages my license plate detection and OCR model into a simple Gradio web app. A user can upload a car image and the app detects the license plate and attempts to read the plate text.
+## How It Works
+**Image → YOLO → License Plate Detection → Crop → EasyOCR → Result**
+The application uses a YOLO model trained for license plate detection and EasyOCR for reading the detected plate region.
+## Model Results
+
+* Dataset: 346 training images and 87 test images
+* Classes: 1 (`license_plate`)
+* Best YOLO detection confidence observed: 0.933
+* OCR: EasyOCR was used to attempt reading the detected plate
+
+The OCR result was not always reliable, so I did not treat low-confidence OCR output as the true plate number.
+
+## Files
+
+* `app.py` – Gradio application
+* `best.pt` – trained YOLO model
+* `requirements.txt` – required Python packages
+* `car42.png` – example car image
+
+## Running the App
+
+Install the required packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+Then run:
+
+```bash
+python app.py
+```
+
+The app opens a Gradio interface where a user can upload an image and view the detection and OCR result.
+
+## Example Input
+
+The repository includes `car42.png` as an example input image.
+
+## Project Goal
+
+The goal of Week 8 was to package the AI model into a usable application so that someone can interact with the model without needing to read or modify the source code.
 
