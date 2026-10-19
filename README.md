@@ -205,18 +205,22 @@ This project packages my license plate detection and OCR model into a simple Gra
 **Image → YOLO → License Plate Detection → Crop → EasyOCR → Result**
 
 The application uses a YOLO model trained for license plate detection and EasyOCR for reading the detected plate region.
-
-
 ## Model Results
 
-- Dataset: 346 training images and 87 test images
-- Classes: 1 (`license_plate`)
-- YOLO mAP50: 0.930 (Week 7 result)
-- OCR: EasyOCR was used to recognize text from the detected license plate.
-- Evaluation: The full detection and OCR pipeline will be evaluated on 20 test images using manually verified plate text.
-- Exact-match accuracy will be reported after rerunning the evaluation with the updated app.
+- **Dataset:** 346 training images and 87 test images
+- **Classes:** 1 (`license_plate`)
+- **YOLO mAP@50:** 0.930 (Week 7 result; reported separately from the Week 8 evaluation)
+- **Plate detection rate:** 95.0% (19 of 20 test images)
+- **OCR exact-match rate:** 42.1% (8 of 19 scorable images)
+- **OCR tool:** EasyOCR
 
-The OCR result is not always reliable. Low-confidence predictions are flagged, but confidence alone does not determine whether a plate number is correct.
+### Evaluation Method
+
+The Week 8 pipeline was evaluated on a sample of 20 test images. License plate text was manually checked against the OCR predictions. One image (`Cars119.png`) was excluded from exact-match scoring because its ground-truth text was unclear. Exact matches were calculated after normalizing letter case, spaces, and punctuation.
+
+### Findings
+
+The model detected license plates in 19 of 20 test images (95.0%). OCR matched the manually verified text exactly in 8 of 19 scorable images (42.1%). These results suggest that plate detection performed well on this sample, while OCR text recognition remains an area for improvement. The evaluation covers only 20 images and should not be treated as a result for the entire 87-image test set.
 
 ## Example Screenshots
 
