@@ -211,17 +211,16 @@ The application uses a YOLO model trained for license plate detection and EasyOC
 - **Classes:** 1 (`license_plate`)
 - **YOLO mAP@50:** 0.930 (Week 7 result; reported separately from the Week 8 evaluation)
 - **Plate detection rate:** 95.0% (19 of 20 test images)
-- **OCR exact-match rate:** 42.1% (8 of 19 scorable images)
+- **OCR exact-match rate:** 61.5% (8 of 13 scorable images)
 - **OCR tool:** EasyOCR
 
 ### Evaluation Method
 
-The Week 8 pipeline was evaluated on a sample of 20 test images. License plate text was manually checked against the OCR predictions. One image (`Cars119.png`) was excluded from exact-match scoring because its ground-truth text was unclear. Exact matches were calculated after normalizing letter case, spaces, and punctuation.
+The Week 8 pipeline was evaluated on 20 selected test images. License plate text was manually checked against the OCR predictions. Seven images were excluded from exact-match scoring because their ground-truth text was unclear or marked `UC`. Exact matches were calculated after normalizing letter case, spaces, and punctuation.
 
 ### Findings
 
-The model detected license plates in 19 of 20 test images (95.0%). OCR matched the manually verified text exactly in 8 of 19 scorable images (42.1%). These results suggest that plate detection performed well on this sample, while OCR text recognition remains an area for improvement. The evaluation covers only 20 images and should not be treated as a result for the entire 87-image test set.
-
+The model detected license plates in 19 of 20 test images (95.0%). OCR matched the manually verified text exactly in 8 of 13 scorable images (61.5%). These results suggest that plate detection performed well on this sample, while OCR text recognition still needs improvement. The evaluation covers only 20 images and should not be treated as a result for the entire 87-image test set.
 ## Example Screenshots
 
 ### Gradio App
