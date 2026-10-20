@@ -1,4 +1,5 @@
 
+
 import gradio as gr
 import numpy as np
 import torch
@@ -22,16 +23,25 @@ def anpr_pipeline(image):
     result = results[0]
 
     if len(result.boxes) == 0:
-        return image, "No license plate detected", "N/A", "No license plate was detected."
+        return (
+            image,
+            "No license plate detected",
+            "N/A",
+            "No license plate was detected."
+        )
 
-    confidence = float(result.boxes.conf[0])
+
+    best_box_index = int(result.boxes.conf.argmax())
+    confidence = float(result.boxes.conf[best_box_index])
+
+    x1, y1, x2, y2 = (
+        result.boxes.xyxy[best_box_index].cpu().numpy().astype(int)
+    )
 
     image_np = np.array(image)
     h, w = image_np.shape[:2]
 
-    x1, y1, x2, y2 = result.boxes.xyxy[0].cpu().numpy().astype(int)
-
-    # Keep coordinates inside the image
+   
     x1 = max(0, x1)
     y1 = max(0, y1)
     x2 = min(w, x2)
@@ -40,9 +50,14 @@ def anpr_pipeline(image):
     plate_crop = image_np[y1:y2, x1:x2]
 
     if plate_crop.size == 0:
-        return image, "Invalid plate crop", "N/A", "The detected plate crop is empty."
+        return (
+            image,
+            "Invalid plate crop",
+            "N/A",
+            "The detected plate crop is empty."
+        )
 
-    # Enlarge the plate crop 4x before OCR
+
     enlarged_crop = cv2.resize(
         plate_crop,
         None,
@@ -54,7 +69,7 @@ def anpr_pipeline(image):
     ocr_results = reader.readtext(enlarged_crop)
 
     if ocr_results:
-        # Select the tallest OCR text box
+     
         best_ocr = max(
             ocr_results,
             key=lambda item: max(point[1] for point in item[0])
@@ -70,8 +85,11 @@ def anpr_pipeline(image):
         ocr_text = "No text detected"
         ocr_confidence = None
 
-    # YOLO returns BGR; Gradio expects RGB
-    annotated_image = cv2.cvtColor(result.plot(), cv2.COLOR_BGR2RGB)
+  
+    annotated_image = cv2.cvtColor(
+        result.plot(),
+        cv2.COLOR_BGR2RGB
+    )
 
     yolo_confidence = round(confidence, 3)
 
@@ -87,12 +105,20 @@ def anpr_pipeline(image):
         f"OCR Confidence: {ocr_confidence_text}"
     )
 
-    return annotated_image, ocr_text, str(ocr_confidence_text), status
+    return (
+        annotated_image,
+        ocr_text,
+        str(ocr_confidence_text),
+        status
+    )
 
 
 demo = gr.Interface(
     fn=anpr_pipeline,
-    inputs=gr.Image(type="pil", label="Upload Vehicle Image"),
+    inputs=gr.Image(
+        type="pil",
+        label="Upload Vehicle Image"
+    ),
     outputs=[
         gr.Image(label="Detection Result"),
         gr.Textbox(label="OCR Text"),
@@ -100,7 +126,10 @@ demo = gr.Interface(
         gr.Textbox(label="Status")
     ],
     title="Automatic Number Plate Recognition (ANPR)",
-    description="Upload a vehicle image to detect a license plate and recognize its text."
+    description=(
+        "Upload a vehicle image to detect a license plate "
+        "and recognize its text."
+    )
 )
 
 
