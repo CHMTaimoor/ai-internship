@@ -104,9 +104,9 @@ This week focused on learning the basics of deep learning using **PyTorch** and 
 | Baseline | 97.43% | 97.28% | 97.24% | **97.32%** |
 | With Dropout (0.2) | 97.49% | 97.39% | 97.34% | **97.41%** |
 
-* The training loss decreased steadily over 5 epochs, which shows that the model was learning.
-* In a single run, the baseline model classified about **97.4%** of the 10,000 test images correctly. It misclassified about **260** images, often visually similar digits.
-* Dropout scored **0.09 percentage points** higher on average. That is roughly 9 images out of 10,000, which is a very small difference.
+The training loss decreased from 0.3567 to 0.0701 over 5 epochs, showing that the model learned from the training data.
+In the single run, the baseline model achieved 97.38% test accuracy and misclassified 262 out of 10,000 test images. The Dropout model achieved 97.39% test accuracy.
+Across three random seeds (42, 0, and 7), the baseline model achieved an average accuracy of 97.32%, while the Dropout model achieved 97.41%. Dropout performed slightly better in all three runs, with improvements of 0.06, 0.11, and 0.10 percentage points, respectively. This represents a small but consistent improvement.
 
 ## Conclusion
 This week helped me understand how PyTorch neural networks are trained using **forward pass, loss calculation, backpropagation, and optimizer updates**. I also learned that a single run is not enough to say a change is an improvement. Dropout was slightly better in all three seeds, but the gain was tiny, so both models performed well on MNIST.
@@ -145,7 +145,8 @@ Image → YOLO → License Plate Crop → EasyOCR → Plate Text
 
 ## Findings
 
-YOLO successfully detected the license plate, while OCR performance was affected by image quality and plate characteristics. The OCR result with the lowest confidence turned out to be the plate itself, so confidence tells how sure the OCR is, not whether it is right. Checking the text against the expected plate format (two letters, two digits, letters, four digits) fixed the letter/digit mix-ups. Even so, a plate that matches the format still has to be checked against the image.
+YOLO successfully detected the license plate, while OCR performance was affected by image quality and plate characteristics. The OCR result with the lowest confidence turned out to be the plate itself, showing that confidence does not always indicate whether the recognized text is correct.
+Checking the recognized text against the expected plate format helped identify possible letter and digit mix-ups. However, a format match does not prove that the recognized plate is correct. Character corrections must be checked against the actual plate image and tested on more examples before being trusted.
 
 ## Conclusion
 
@@ -200,17 +201,14 @@ OCR Confidence: 0.998
 This is correct for this plate. Weak text pieces below the 0.50 confidence threshold were dropped. The result was also saved to `anpr_result.txt`. One image is an example, not an evaluation, so I also tested 20 images.
 
 ## 20-Image Evaluation
-
-I selected 20 test images, wrote down the plate text by hand, and ran the pipeline on all of them.
-
-* **Plate found:** 18 of 20 images (**90%**)
-* **Read exactly right:** 2 of 14 scorable images (**14.3%**). Six images were excluded because the plate text was unclear (blurry, blocked, or not visible).
+I selected 20 test images and manually recorded the plate text to create a ground-truth answer key. I then compared the OCR predictions with the manual answers using normalized exact matching.
+The answer key was reviewed and corrected to address identified character-reading and scoring issues. The evaluation is being rerun using the corrected answer key, so the final detection and exact-match results will be added after verification.
 
 ## Findings
 
 * YOLO detects plates well, but reading the text is the weak part of the pipeline.
 * mAP@50 only measures finding the plate, not whether the final text is correct.
-* The exact-match rate is the number an ANPR system is judged on, and it was low here.
+*The exact-match rate is an important measure of OCR performance, and it was low in this evaluation.
 * Picking text by confidence is not reliable. In Weeks 6 and 7, the low-confidence result was often the plate itself.
 
 ## Conclusion
