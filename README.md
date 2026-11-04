@@ -200,91 +200,80 @@ OCR Confidence: 0.998
 
 This is correct for this plate. Weak text pieces below the 0.50 confidence threshold were dropped. The result was also saved to `anpr_result.txt`. One image is an example, not an evaluation, so I also tested 20 images.
 
-## 20-Image Evaluation
-I selected 20 test images and manually recorded the plate text to create a ground-truth answer key. I then compared the OCR predictions with the manual answers using normalized exact matching.
-The answer key was reviewed and corrected to address identified character-reading and scoring issues. The evaluation is being rerun using the corrected answer key, so the final detection and exact-match results will be added after verification.
+### 20-Image Evaluation
 
-## Findings
+I selected 20 test images and manually verified their license plate text to create a ground-truth answer key. The same `answer_key.json` file is used in both Week 7 and Week 8 to ensure consistent evaluation.
 
-* YOLO detects plates well, but reading the text is the weak part of the pipeline.
-* mAP@50 only measures finding the plate, not whether the final text is correct.
-*The exact-match rate is an important measure of OCR performance, and it was low in this evaluation.
-* Picking text by confidence is not reliable. In Weeks 6 and 7, the low-confidence result was often the plate itself.
+Two images were excluded from exact-match accuracy scoring:
 
-## Conclusion
+- Cars162.png: The license plate was partly hidden.
+- Cars87.png: Two license plates were visible, so there was no single clear answer.
 
-This project combines **object detection and OCR into one working ANPR pipeline**. It can take a new vehicle image, detect the license plate, and return text. The 20-image test shows detection works well, while OCR needs improvement, which Week 8 works on.
+The remaining 18 images were used for exact-match evaluation.
+
+### Findings
+
+- YOLO detected plates in 18 out of 20 images (90.0%).
+- OCR correctly recognized 2 out of 18 scorable plates (11.1%).
+- Plate detection and OCR accuracy measure different parts of the system.
+- OCR still struggles with similar-looking letters and numbers.
+
+### Conclusion
+
+The Week 7 project successfully demonstrated an end-to-end license plate detection and OCR pipeline. However, the evaluation showed that recognizing plate text is more challenging than detecting the plate. Further OCR improvements are needed.
 
 ## How to Run
 
 Open `Week_7_Capstone_ANPR_Pipeline.ipynb` in Google Colab, provide a vehicle image, and run the cells in order to obtain the final plate detection and OCR result.
 
-# Week 8 – Capstone App: License Plate Detection and OCR
+## Week 8 – Capstone App: License Plate Detection and OCR
 
-## Overview
+### Overview
 
-This project packages my license plate detection and OCR model into a simple Gradio web app. A user can upload a car image and the app detects the license plate and attempts to read the plate text.
+This project packages my license plate detection and OCR model into a Gradio application. Users can upload a vehicle image, and the application detects the license plate and attempts to recognize its text.
 
-## How It Works
+### How It Works
 
-**Image → YOLO → License Plate Detection → Crop → EasyOCR → Result**
+Image → YOLO → License Plate Detection → Crop → EasyOCR → Result
 
-The application uses a YOLO model trained for license plate detection and EasyOCR for reading the detected plate region.
-## Model Results
+### Model Results
 
-- **Dataset:** 346 training images and 87 test images
-- **Classes:** 1 (`license_plate`)
-- **YOLO mAP@50:** 0.930 (Week 7 result; reported separately from the Week 8 evaluation)
-- **Plate detection rate:** 95.0% (19 of 20 test images)
-- **OCR exact-match rate:** 61.5% (8 of 13 scorable images)
-- **OCR tool:** EasyOCR
+- Training images: 277
+- Validation images: 69
+- Test images: 87
+- Validation mAP@50: 0.904
+- Selected test images evaluated: 20
+- Plates detected: 18 out of 20 (90.0%)
+- OCR exact-match accuracy: 2 out of 18 (11.1%)
 
 ### Evaluation Method
 
-The Week 8 pipeline was evaluated on 20 selected test images. License plate text was manually checked against the OCR predictions. Seven images were excluded from exact-match scoring because their ground-truth text was unclear or marked `UC`. Exact matches were calculated after normalizing letter case, spaces, and punctuation.
+The old and updated pipelines were evaluated using the same 20 selected test images and the same verified `answer_key.json` file.
+
+Two images were excluded from exact-match scoring:
+
+- Cars162.png: The plate was partly hidden.
+- Cars87.png: Two plates were visible, so there was no single clear answer.
+
+The remaining 18 images were used for exact-match evaluation.
 
 ### Findings
 
-The model detected license plates in 19 of 20 test images (95.0%). OCR matched the manually verified text exactly in 8 of 13 scorable images (61.5%). These results suggest that plate detection performed well on this sample, while OCR text recognition still needs improvement. The evaluation covers only 20 images and should not be treated as a result for the entire 87-image test set.
-## Example Screenshots
+- The old pipeline correctly recognized 2 out of 18 plates (11.1%).
+- The updated pipeline also correctly recognized 2 out of 18 plates (11.1%).
+- Both pipelines produced identical OCR predictions in this comparison.
+- The updated pipeline did not demonstrate an improvement in exact-match accuracy.
+- YOLO detected plates in 18 out of 20 images (90.0%).
+- OCR still struggles with similar-looking characters.
 
-### Gradio App
+### Conclusion
 
-![Week 8 Gradio App](week8_app.png.png)
+Both pipelines achieved the same exact-match accuracy of 2 out of 18 images (11.1%). A difference of only one correctly recognized plate would be too small to declare a reliable winner. A larger evaluation dataset is needed for a more reliable comparison.
 
-### Detection and OCR Result
+### Files
 
-![Week 8 Detection Result](week8_result.png.png)
-
-## Files
-
-* `app.py` – Gradio application
-* `best.pt` – trained YOLO model
-* `requirements.txt` – required Python packages
-* `Week_8_App_Deployment.ipynb` – Week 8 notebook
-* `Cars42.png` – example car image
-
-## Running the App
-
-Install the required packages:
-
-```bash
-pip install -r requirements.txt
-```
-
-Then run:
-
-```bash
-python app.py
-```
-
-The app opens a Gradio interface where a user can upload an image and view the detection and OCR result.
-
-## Example Input
-
-The repository includes `Cars42.png` as an example input image.
-
-## Project Goal
-
-The goal of Week 8 was to package the AI model into a usable application so that someone can interact with the model without needing to read or modify the source code.
-
+- `app.py` – Gradio application.
+- `best.pt` – trained YOLO model.
+- `requirements.txt` – required Python packages.
+- `Week_8_App_Deployment.ipynb` – Week 8 notebook.
+- `answer_key.json` – shared verified answer key.
