@@ -214,7 +214,7 @@ The remaining 18 images were used for exact-match evaluation.
 ### Findings
 
 - YOLO detected plates in 18 out of 20 images (90.0%).
-- OCR correctly recognized 2 out of 18 scorable plates (11.1%).
+-OCR correctly recognized 4 out of 18 scorable plates (22.2%).
 - Plate detection and OCR accuracy measure different parts of the system.
 - OCR still struggles with similar-looking letters and numbers.
 
