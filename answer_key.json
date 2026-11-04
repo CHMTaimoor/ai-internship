@@ -1,0 +1,26 @@
+{
+    "ground_truth": {
+        "Cars12.png": "MH12BG7237",
+        "Cars120.png": "B2228HM",
+        "Cars165.png": "TN21AU1153",
+        "Cars166.png": "IM A CAR",
+        "Cars179.png": "4SZW590",
+        "Cars210.png": "MH01AE8017",
+        "Cars229.png": "91245",
+        "Cars230.png": "LR33TEE",
+        "Cars242.png": "PRE NUP",
+        "Cars25.png": "BYHM136",
+        "Cars257.png": "OKLA",
+        "Cars334.png": "E8 OLA",
+        "Cars394.png": "MH12MR0613",
+        "Cars419.png": "MH14GN9239",
+        "Cars422.png": "MH20EE7596",
+        "Cars63.png": "BIG TEAM",
+        "Cars71.png": "LNI3GJZ",
+        "Cars8.png": "G526JHD"
+    },
+    "excluded_images": [
+        "Cars162.png",
+        "Cars87.png"
+    ]
+}
