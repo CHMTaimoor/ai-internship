@@ -277,4 +277,5 @@ Both pipelines achieved the same exact-match accuracy of 2 out of 18 images (11.
 - `requirements.txt` – required Python packages.
 - `Week_8_App_Deployment.ipynb` – Week 8 notebook.
 - `answer_key.json` – shared verified answer key.
+
 Week 7 and Week 8 results come from their respective evaluation runs. Although both use the same verified answer key, the OCR pipelines and evaluation procedures differ. Therefore their results are reported separately rather than treated as a direct comparison. In the Week 8 comparison both pipelines achieved 2/18 (11.1%).
