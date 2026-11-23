@@ -213,14 +213,19 @@ The remaining 18 images were used for exact-match evaluation.
 
 ### Findings
 
-- YOLO detected plates in 18 out of 20 images (90.0%).
--OCR correctly recognized 4 out of 18 scorable plates (22.2%).
-- Plate detection and OCR accuracy measure different parts of the system.
+- YOLO detected license plates in 18 out of 20 images (90.0%).
+- Two images were excluded from exact-match scoring, leaving 18 scorable images.
+- The first OCR method correctly recognized 5 out of 18 plates (27.8%).
+- The whole-plate OCR method correctly recognized 4 out of 18 plates (22.2%).
+- The first method achieved only one additional correct prediction.
+- This one-plate difference is too small to confidently declare a winner.
 - OCR still struggles with similar-looking letters and numbers.
 
 ### Conclusion
 
-The Week 7 project successfully demonstrated an end-to-end license plate detection and OCR pipeline. However, the evaluation showed that recognizing plate text is more challenging than detecting the plate. Further OCR improvements are needed.
+The Week 7 project successfully demonstrated an end-to-end license plate detection and OCR pipeline using YOLO and EasyOCR.
+Two OCR methods were evaluated using the same 18 scorable images and verified answer key. The first method achieved 5/18 (27.8%), while the whole-plate OCR method achieved 4/18 (22.2%).
+Although the first method performed slightly better, the difference of one correctly recognized plate is too small to confidently declare a winner. Further improvements in image preprocessing, plate cropping, and OCR techniques are needed to improve recognition accuracy.
 
 ## How to Run
 
@@ -240,11 +245,14 @@ Image → YOLO → License Plate Detection → Crop → EasyOCR → Result
 
 - Training images: 277
 - Validation images: 69
-- Test images: 87
-- Validation mAP@50: 0.904
+- Test images: 87 (kept separate)
+- Precision: 0.895
+- Recall: 0.883
+- mAP@50: 0.904
+- mAP@50-95: 0.554
 - Selected test images evaluated: 20
 - Plates detected: 18 out of 20 (90.0%)
-- OCR exact-match accuracy: 2 out of 18 (11.1%)
+- OCR exact-match accuracy: 2 out of 18 (11.1%) for both pipelines
 
 ### Evaluation Method
 
@@ -259,17 +267,22 @@ The remaining 18 images were used for exact-match evaluation.
 
 ### Findings
 
+- The YOLO26n model was trained using 277 training images and 69 validation images, while 87 test images were kept separate.
+- The model achieved a precision of 0.895, recall of 0.883, mAP@50 of 0.904, and mAP@50-95 of 0.554.
+- The Gradio application integrated YOLO26n for license plate detection and EasyOCR for text recognition.
+- The application was evaluated on 20 selected test images.
+- Two images were excluded from exact-match scoring, leaving 18 scorable images.
 - The old pipeline correctly recognized 2 out of 18 plates (11.1%).
 - The updated pipeline also correctly recognized 2 out of 18 plates (11.1%).
-- Both pipelines produced identical OCR predictions in this comparison.
-- The updated pipeline did not demonstrate an improvement in exact-match accuracy.
-- YOLO detected plates in 18 out of 20 images (90.0%).
-- OCR still struggles with similar-looking characters.
+- Both pipelines achieved identical exact-match accuracy.
+- The updated pipeline did not demonstrate an improvement in OCR accuracy.
 
 ### Conclusion
 
-Both pipelines achieved the same exact-match accuracy of 2 out of 18 images (11.1%). A difference of only one correctly recognized plate would be too small to declare a reliable winner. A larger evaluation dataset is needed for a more reliable comparison.
-
+Week 8 successfully extended the ANPR project into a Gradio-based license plate recognition application using YOLO26n and EasyOCR.
+The trained YOLO26n model achieved a precision of 0.895, recall of 0.883, mAP@50 of 0.904, and mAP@50-95 of 0.554.
+During evaluation, both the old and updated pipelines achieved 2 correct predictions out of 18 scorable images (11.1%). Therefore, the updated pipeline did not demonstrate an improvement in exact-match accuracy.
+The results highlight that accurate license plate detection does not necessarily guarantee accurate text recognition. Further improvements in image preprocessing, plate cropping, and OCR techniques are needed.
 ### Files
 
 - `app.py` – Gradio application.
@@ -277,5 +290,3 @@ Both pipelines achieved the same exact-match accuracy of 2 out of 18 images (11.
 - `requirements.txt` – required Python packages.
 - `Week_8_App_Deployment.ipynb` – Week 8 notebook.
 - `answer_key.json` – shared verified answer key.
-
-Week 7 and Week 8 results come from their respective evaluation runs. Although both use the same verified answer key, the OCR pipelines and evaluation procedures differ. Therefore their results are reported separately rather than treated as a direct comparison. In the Week 8 comparison both pipelines achieved 2/18 (11.1%).
